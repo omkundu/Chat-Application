@@ -5,7 +5,11 @@ import {Server} from "socket.io"
 const app=express();
 const PORT=4000;
 const httpServer=http.createServer(app)
-const io=new Server(httpServer)
+const io=new Server(httpServer,{
+    cors:{
+        origin:["http://localhost:3000"]
+    }
+})
 
 import path from "path"
 import {fileURLToPath} from "url"
@@ -14,13 +18,16 @@ const __dirname=path.dirname(__filename)
 
 
 app.get("/",(req,res)=>{
-// res.json({data:"Hello world from socket"})
+
 res.sendFile(__dirname + '/index.html');
 });
 
 
 io.on("connection",(socket)=>{
-    console.log("Connection is ready")
+    // console.log("Connection is ready")
+    socket.on("send-message",(data)=>{
+        console.log("Message Recieved",data);
+    })
 })
 
 
