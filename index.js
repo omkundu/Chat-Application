@@ -26,7 +26,8 @@ res.sendFile(__dirname + '/index.html');
 io.on("connection",(socket)=>{
     // console.log("Connection is ready")
     socket.on("send-message",(data)=>{
-        console.log("Message Recieved",data);
+        socket.emit("message-from-server",data)
+        
     })
 })
 
